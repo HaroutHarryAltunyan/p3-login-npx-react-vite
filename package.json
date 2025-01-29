@@ -9,25 +9,18 @@
     "install": "cd server && npm i && cd ../client && npm i",
     "seed": "cd server && npm run seed",
     "build": "cd client && npm run build",
-      "dev": "cd client && vite"
+    "dev": "cd client && vite"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "^8.2.0",
     "@apollo/react-hooks": "^4.0.0",
+    "concurrently": "^8.2.0",
     "jwt-decode": "^4.0.0",
     "react-router-dom": "^6.28.2"
-
+  },
+  "dependencies": {
+    "@apollo/client": "^3.12.8"
   }
 }
-
-
-
-
-
-
-
-
-

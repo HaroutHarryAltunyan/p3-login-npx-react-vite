@@ -1,4 +1,4 @@
-// import dotenv from 'dotenv';
+import dotenv from 'dotenv';
 import express from 'express';
 import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
@@ -6,16 +6,14 @@ import db from './config/connection.js';
 import typeDefs from './graphql/typeDefs.js';
 import resolvers from './graphql/resolvers/index.js';
 
+dotenv.config(); // Load .env variables
+
 const app = express();
 
+// Use .env for MongoDB URI if available
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb+srv://haroutyunhaltunyan93:TOxbTgT3kG8fXtnS@loginproject3.puzfb.mongodb.net/?retryWrites=true&w=majority&appName=loginproject3";
 
-// // MongoDB connection string
-// const MONGODB = process.env.MONGODB_URI;
-
-const MONGODB = "mongodb+srv://haroutyunhaltunyan93:TOxbTgT3kG8fXtnS@loginproject3.puzfb.mongodb.net/?retryWrites=true&w=majority&appName=loginproject3";
-
-// Port configuration
-const PORT = process.env.PORT || 4001;
+const PORT = process.env.PORT || 3000;
 
 // Create a new ApolloServer instance
 const server = new ApolloServer({
@@ -24,48 +22,39 @@ const server = new ApolloServer({
   context: ({ req }) => ({ req }), // Pass the request to the context if needed
 });
 
-// Connect to MongoDB using Mongoose
-
-
-// this is mongodb when without.env
-
 const startApolloServer = async () => {
-  // start Apollo Server Instance
-  await server.start();
-  // Connect to our DataBase
-  await db;
-  // These 2 lines PARSE the INCOMING data BODY (req.body)
-  app.use(express.urlencoded({ extended: false}));
-  app.use(express.json());
+  try {
+    // Start Apollo Server
+    await server.start();
 
-  app.use('/graphql', expressMiddleware);
+    // Middleware setup
+    app.use(express.urlencoded({ extended: false }));
+    app.use(express.json());
 
-  app.listen(PORT, () => {
-    console.log("Server started...");
-  });
+    // Correct way to use Apollo Middleware
+    app.use('/graphql', expressMiddleware(server));
+
+    // Confirm MongoDB Connection
+    db.once('open', () => {
+      console.log('✅ MongoDB Connected');
+
+      // Start Express Server
+      app.listen(PORT, () => {
+        console.log(`🚀 Server running at http://localhost:${PORT}/graphql`);
+      });
+    });
+
+    // Handle MongoDB connection errors
+    db.on('error', (err) => {
+      console.error('❌ MongoDB connection error:', err);
+    });
+
+  } catch (error) {
+    console.error('❌ Error starting Apollo Server:', error);
+  }
 };
 
-/*
-  .connect(MONGODB, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => {
-    console.log('MongoDB Connected');
-    // Start Apollo Server after MongoDB connection is successful
-    return server.listen({ port: PORT });
-  })
-  .then((res) => {
-    console.log(`Server running at ${res.url}`);
-  })
-  .catch((err) => {
-    console.error('Error connecting to MongoDB:', err.message);
-  });
-*/
-
-// // this is for mongodb in .env
-//   const MONGODB = process.env.MONGODB_URI;
-// mongoose.connect(MONGODB)
-//   .then(() => console.log('MongoDB Connected'))
-//   .catch((err) => console.error('Error connecting to MongoDB:', err.message));
-
+// Start the server
 startApolloServer();
 
 
@@ -73,25 +62,138 @@ startApolloServer();
 
 
 
-// import mongoose from 'mongoose';
 
-// dotenv.config();
 
-// const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/proj3';
 
-// mongoose.connect(MONGODB_URI, {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// // import dotenv from 'dotenv';
+// import express from 'express';
+// import { ApolloServer } from '@apollo/server';
+// import { expressMiddleware } from '@apollo/server/express4';
+// import db from './config/connection.js';
+// import typeDefs from './graphql/typeDefs.js';
+// import resolvers from './graphql/resolvers/index.js';
+
+// const app = express();
+
+
+// // // MongoDB connection string
+// // const MONGODB = process.env.MONGODB_URI;
+
+// const MONGODB = "mongodb+srv://haroutyunhaltunyan93:TOxbTgT3kG8fXtnS@loginproject3.puzfb.mongodb.net/?retryWrites=true&w=majority&appName=loginproject3";
+
+// // Port configuration
+// const PORT = process.env.PORT || 3000;
+
+// // Create a new ApolloServer instance
+// const server = new ApolloServer({
+//   typeDefs,
+//   resolvers,
+//   context: ({ req }) => ({ req }), // Pass the request to the context if needed
 // });
 
-// const db = mongoose.connection;
+// // Connect to MongoDB using Mongoose
 
-// db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-// db.once('open', () => {
-//   console.log('Connected to MongoDB');
-// });
 
-// export default db;
+// // this is mongodb when without.env
+
+// const startApolloServer = async () => {
+//   // start Apollo Server Instance
+//   await server.start();
+//   // Connect to our DataBase
+//   await db;
+//   // These 2 lines PARSE the INCOMING data BODY (req.body)
+//   app.use(express.urlencoded({ extended: false}));
+//   app.use(express.json());
+
+//   app.use('/graphql', expressMiddleware);
+
+//   app.listen(PORT, () => {
+//     console.log("Server started...");
+//   });
+// };
+
+// /*
+//   .connect(MONGODB, { useNewUrlParser: true, useUnifiedTopology: true })
+//   .then(() => {
+//     console.log('MongoDB Connected');
+//     // Start Apollo Server after MongoDB connection is successful
+//     return server.listen({ port: PORT });
+//   })
+//   .then((res) => {
+//     console.log(`Server running at ${res.url}`);
+//   })
+//   .catch((err) => {
+//     console.error('Error connecting to MongoDB:', err.message);
+//   });
+// */
+
+// // // this is for mongodb in .env
+// //   const MONGODB = process.env.MONGODB_URI;
+// // mongoose.connect(MONGODB)
+// //   .then(() => console.log('MongoDB Connected'))
+// //   .catch((err) => console.error('Error connecting to MongoDB:', err.message));
+
+// startApolloServer();
+
+
+
+
+
+
+// // import mongoose from 'mongoose';
+
+// // dotenv.config();
+
+// // const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/proj3';
+
+// // mongoose.connect(MONGODB_URI, {
+// //   useNewUrlParser: true,
+// //   useUnifiedTopology: true,
+// // });
+
+// // const db = mongoose.connection;
+
+// // db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+// // db.once('open', () => {
+// //   console.log('Connected to MongoDB');
+// // });
+
+// // export default db;
 
 
 

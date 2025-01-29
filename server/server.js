@@ -13,6 +13,11 @@ const app = express();
 // Use .env for MongoDB URI if available
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb+srv://haroutyunhaltunyan93:TOxbTgT3kG8fXtnS@loginproject3.puzfb.mongodb.net/?retryWrites=true&w=majority&appName=loginproject3";
 
+
+// const MONGODB = "mongodb+srv://haroutyunhaltunyan93:TOxbTgT3kG8fXtnS@loginproject3.puzfb.mongodb.net/?retryWrites=true&w=majority&appName=loginproject3";
+
+
+
 const PORT = process.env.PORT || 3000;
 
 // Create a new ApolloServer instance

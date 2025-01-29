@@ -57,14 +57,13 @@ import App from './App.jsx';
 import client from './apolloClient.js'; 
 
 // ✅ Correct Apollo Provider Import
-// import { ApolloProvider } from '@apollo/client'; might not need here based on template
+import { ApolloProvider } from '@apollo/client'; //might not need here based on template
 import { AuthProvider } from './context/authContext.jsx';
 
 // import Navbar from './components/navbar'; this is in app.jsx based on template
 import Homepage from './pages/homepage';
 import Register from './pages/register';
 import Login from './pages/login';
-
 
 // ✅ Set up routes using React Router
 const router = createBrowserRouter([
@@ -73,14 +72,16 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       { 
-        path: "/login",
-        element: <Login /> 
-      },
-      {
-        path: "/register", element: <Register /> 
+        path: "/", 
+        element: <Homepage /> 
       },
       { 
-        path: "/", element: <Homepage /> 
+        path: "/login", 
+        element: <Login /> 
+      },
+      { 
+        path: "/register", 
+        element: <Register /> 
       },
     ],
   },

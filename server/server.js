@@ -10,11 +10,11 @@ dotenv.config(); // Load .env variables
 
 const app = express();
 
-// Use .env for MongoDB URI if available
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb+srv://haroutyunhaltunyan93:TOxbTgT3kG8fXtnS@loginproject3.puzfb.mongodb.net/?retryWrites=true&w=majority&appName=loginproject3";
+// // Use .env for MongoDB URI if available
+// const MONGODB_URI = process.env.MONGODB_URI || "mongodb+srv://haroutyunhaltunyan93:TOxbTgT3kG8fXtnS@loginproject3.puzfb.mongodb.net/?retryWrites=true&w=majority&appName=loginproject3";
 
 
-// const MONGODB = "mongodb+srv://haroutyunhaltunyan93:TOxbTgT3kG8fXtnS@loginproject3.puzfb.mongodb.net/?retryWrites=true&w=majority&appName=loginproject3";
+const MONGODB = "mongodb+srv://haroutyunhaltunyan93:TOxbTgT3kG8fXtnS@loginproject3.puzfb.mongodb.net/?retryWrites=true&w=majority&appName=loginproject3";
 
 
 
@@ -45,6 +45,7 @@ const startApolloServer = async () => {
 
       // Start Express Server
       app.listen(PORT, () => {
+        console.log(`API server running on port ${PORT}!`);
         console.log(`🚀 Server running at http://localhost:${PORT}/graphql`);
       });
     });

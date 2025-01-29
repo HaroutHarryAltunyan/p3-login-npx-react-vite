@@ -106,9 +106,6 @@ function App() {
               <Routes>
                <Route path="/" element={<Homepage />} />
                 <Route path="/login" element={<Login />} />
-
-                <Outlet />
-
                 <Route path="/register" element={<Register />} />
               </Routes>
             </main>

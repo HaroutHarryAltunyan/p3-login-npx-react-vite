@@ -24,8 +24,23 @@ This application is a full-stack MERN (MongoDB, Express.js, React, Node.js) sing
 
 ```
 AS A user,
-I WANT a seamless application experience that lets me interact with real-world data securely and efficiently,
-SO THAT I can achieve my goals effortlessly.
+a busy professional and tech enthusiast,
+I WANT to have a single platform where I can share my thoughts and manage my tasks,
+So THAT I can stay organized and interact with like-minded individuals.
+
+✔️ User Authentication:
+	•	As a user, I can sign up with my username, email, and password.
+	•	As a returning user, I can log in securely and access my data.
+
+✔️ Posting & Viewing Thoughts:
+	•	As a logged-in user, I can post my thoughts on the platform.
+	•	As a user, I can view thoughts posted by other users.
+	•	As a user, I can comment on thoughts and engage in discussions.
+
+✔️ Managing My To-Do List:
+	•	As a user, I can add tasks to my personal to-do list.
+	•	As a user, I can mark tasks as completed or pending.
+	•	As a user, I can delete tasks I no longer need.
 ```
 
 ## Technologies Used
@@ -61,7 +76,7 @@ SO THAT I can achieve my goals effortlessly.
    ```
 3. Install dependencies:
    ```bash
-   npm install
+   npm install 
    ```
 4. Set up environment variables:
    - Create a `.env` file in the root directory.
@@ -74,7 +89,8 @@ SO THAT I can achieve my goals effortlessly.
      ```
 5. Start the development server:
    ```bash
-   npm run Develop
+   npm run build
+   npm run develop
    ```
 
 ## Features
@@ -91,8 +107,9 @@ SO THAT I can achieve my goals effortlessly.
 ## Screenshots
 - 
 
-![main login page ](./client/public/Screenshot%202025-01-29%20at%2011.26.47 PM.png)
-![main login page ](./client/public/Screenshot%202025-01-30%20at%2012.57.52 AM.png)
+![main login page ](./images/Screenshot%202025-01-30%20at%2012.14.11 PM.png)
+![main login page ](./images/Screenshot%202025-01-30%20at%2012.14.23 PM.png)
+![main login page ](./)
 
 ## GraphQL Endpoints
 
@@ -149,9 +166,9 @@ Mutations
 │   │   ├── User.js
 │   │   ├── Thought.js
 │   │   ├── ToDo.js
-|  |    |── Users.js
+|   |   |── Users.js
 │   ├── 📂 schemas/
-|   |    |── index.js
+|   |   |── index.js
 │   │   ├── resolvers.js
 │   │   ├── typeDefs.js
 │   ├── 📂 utils/
@@ -184,10 +201,10 @@ Mutations
 - **Elevator Pitch:** A concise overview of the application’s purpose and functionality.
 - **Concept:** Focus on user-centered design and solving real-world challenges.
 - **Process:**
-  - Collaboration and task management using [Insert tool, e.g., Trello, GitHub Projects].
-  - Overcoming challenges such as [Insert specific challenges].
-  - Successes include [Insert key successes].
-- **Demo:** Showcase the application in action.
+  - Collaboration and task management using [N/A].
+  - Overcoming challenges such as [getting the client/dist/html running].
+  - Successes include [able to connect to external database MongoDB].
+- **Demo:** Showcase the application in action. [In video clip]
 - **Future Development:** Highlight planned enhancements and scalability.
 
 ## License

@@ -47,7 +47,7 @@
 
 ///////////////////////////////////////////////////////////////////////// mongodb atlas config below 
 
-
+//// npm install , npm run build --prefix client 
 
 const express = require('express');
 const { ApolloServer } = require('@apollo/server');

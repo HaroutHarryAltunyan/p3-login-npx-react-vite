@@ -1,5 +1,5 @@
 {
-  "name": "p3-login-npx-react-vite",
+  "name": "programming-thoughts",
   "version": "1.0.0",
   "description": "",
   "main": "server/server.js",
@@ -8,19 +8,17 @@
     "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm run dev\"",
     "install": "cd server && npm i && cd ../client && npm i",
     "seed": "cd server && npm run seed",
-    "build": "cd client && npm run build",
-    "dev": "cd client && vite"
+    "build": "cd client && npm run build"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@apollo/react-hooks": "^4.0.0",
-    "concurrently": "^8.2.0",
-    "jwt-decode": "^4.0.0",
-    "react-router-dom": "^6.28.2"
+    "concurrently": "^8.2.0"
   },
   "dependencies": {
-    "@apollo/client": "^3.12.8"
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/material": "^6.4.2"
   }
 }

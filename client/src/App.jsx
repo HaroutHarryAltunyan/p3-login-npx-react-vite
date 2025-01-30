@@ -1,124 +1,3 @@
-// import React from 'react';
-// import { Routes, Route } from "react-router-dom";
-
-
-
-
-
-// import Navbar from './components/navbar';
-// import Homepage from './pages/homepage';
-// import Register from './pages/register';
-// import Login from './pages/login';
-
-// function App() {
-//   return (
-//     <div>
-//       {/* Navbar component is rendered on all pages */}
-//       <Navbar />
-//       <main>
-//         {/* Define application routes */}
-//         <Routes>
-//           <Route path="/" element={<Homepage />} />
-//           <Route path="/login" element={<Login />} />
-//           <Route path="/register" element={<Register />} />
-//         </Routes>
-//       </main>
-//     </div>
-//   );
-// }
-
-// export default App;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/////////////////////////////////////////////////with fixes from app.jsx and main.jsx 
-// import './App.css';
-// import {
-//   ApolloClient,
-//   InMemoryCache,
-//   ApolloProvider,
-//   createHttpLink,
-// } from '@apollo/client';
-// import { setContext } from '@apollo/client/link/context';
-// import { Outlet } from 'react-router-dom';
-// import React from 'react';
-
-
-// import Navbar from './components/navbar';
-
-
-
-
-// // Construct our main GraphQL API endpoint
-// const httpLink = createHttpLink({
-//   uri: '/graphql',
-// });
-
-// // Construct request middleware that will attach the JWT token to every request as an `authorization` header
-// const authLink = setContext((_, { headers }) => {
-//   // get the authentication token from local storage if it exists
-//   const token = localStorage.getItem('id_token');
-//   // return the headers to the context so httpLink can read them
-//   return {
-//     headers: {
-//       ...headers,
-//       authorization: token ? `Bearer ${token}` : '',
-//     },
-//   };
-// });
-
-
-
-// const client = new ApolloClient({
-//   // Set up our client to execute the `authLink` middleware prior to making the request to our GraphQL API
-//   link: authLink.concat(httpLink),
-//   cache: new InMemoryCache(),
-// });
-
-
-// function App() {
-//   return (
-//     <ApolloProvider client={client}>
-//       <div>
-
-
-//         {/* Navbar component is rendered on all pages */}
-//           <Navbar />
-//           <main>
-//             {/* Define application routes */}
-//               <Routes>
-//                <Route path="/" element={<Homepage />} />
-//                 <Route path="/login" element={<Login />} />
-//                 <Route path="/register" element={<Register />} />
-//               </Routes>
-//             </main>
-//         </div>
-//     </ApolloProvider>
-//   );
-// }
-
-// export default App;
-
-
-
-
-
-
-
-
 import './App.css';
 import {
   ApolloClient,
@@ -127,14 +6,10 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { Outlet, Routes, Route } from 'react-router-dom'; // ✅ Import Routes and Route
-import React from 'react';
+import { Outlet } from 'react-router-dom';
 
-import Navbar from './components/navbar';
-// homepage, reg,login should be in main but when doing so i get an error ill leave open for now, wed jan 29 4:01pm
-import Homepage from './pages/homepage';
-import Register from './pages/register';
-import Login from './pages/login';
+import Header from './components/Header';
+import Footer from './components/Footer';
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -143,7 +18,9 @@ const httpLink = createHttpLink({
 
 // Construct request middleware that will attach the JWT token to every request as an `authorization` header
 const authLink = setContext((_, { headers }) => {
+  // get the authentication token from local storage if it exists
   const token = localStorage.getItem('id_token');
+  // return the headers to the context so httpLink can read them
   return {
     headers: {
       ...headers,
@@ -153,6 +30,7 @@ const authLink = setContext((_, { headers }) => {
 });
 
 const client = new ApolloClient({
+  // Set up our client to execute the `authLink` middleware prior to making the request to our GraphQL API
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
@@ -160,102 +38,15 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <div>
-        {/* Navbar component is rendered on all pages */}
-        <Navbar />
-        <main>
-          {/* Define application routes */}
-          <Routes>
-            <Route path="/" element={<Homepage />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-          </Routes>
-        </main>
+      <div className="flex-column justify-flex-start min-100-vh">
+        <Header />
+        <div className="container">
+          <Outlet />
+        </div>
+        <Footer />
       </div>
     </ApolloProvider>
   );
 }
 
 export default App;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import { useState } from 'react'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
-// import './App.css'
-
-// function App() {
-//   const [count, setCount] = useState(0)
-
-//   return (
-//     <>
-//       <div>
-//         <a href="https://vite.dev" target="_blank">
-//           <img src={viteLogo} className="logo" alt="Vite logo" />
-//         </a>
-//         <a href="https://react.dev" target="_blank">
-//           <img src={reactLogo} className="logo react" alt="React logo" />
-//         </a>
-//       </div>
-//       <h1>Vite + React</h1>
-//       <div className="card">
-//         <button onClick={() => setCount((count) => count + 1)}>
-//           count is {count}
-//         </button>
-//         <p>
-//           Edit <code>src/App.jsx</code> and save to test HMR
-//         </p>
-//       </div>
-//       <p className="read-the-docs">
-//         Click on the Vite and React logos to learn more
-//       </p>
-//     </>
-//   )
-// }
-
-// export default App

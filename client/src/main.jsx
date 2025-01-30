@@ -1,227 +1,43 @@
-// import React from 'react';
-// import ReactDOM from 'react-dom/client';
-// import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
-// import './index.css';
-// import App from './App.jsx';
-// // import reportWebVitals from './reportWebVitals';
-// import client from './apolloClient.js'; 
-
-// // ✅ Correct Apollo Provider Import
-// import { ApolloProvider } from '@apollo/client';
-// import { BrowserRouter } from 'react-router-dom';
-// import { AuthProvider } from './context/authContext.jsx'; // Ensure the path is correct
-
-// // React 18: Use ReactDOM.createRoot
-// const root = ReactDOM.createRoot(document.getElementById('root'));
-// root.render(
-//   <React.StrictMode>
-//     <AuthProvider>
-//       <ApolloProvider client={client}>
-//         <BrowserRouter>
-//           <App />
-//         </BrowserRouter>
-//       </ApolloProvider>
-//     </AuthProvider>
-//   </React.StrictMode>
-// );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-///////////////////////////////// with fixes from main.jsx and app.jsx
-
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import './index.css';
 import App from './App.jsx';
-import client from './apolloClient.js'; 
+import Home from './pages/Home';
+import Signup from './pages/Signup';
+import Login from './pages/Login';
+import SingleThought from './pages/SingleThought';
+import Profile from './pages/Profile';
+import ErrorPage from './pages/ErrorPage';
 
-// ✅ Correct Apollo Provider Import
-import { ApolloProvider } from '@apollo/client'; //might not need here based on template
-import { AuthProvider } from './context/authContext.jsx';
-
-// import Navbar from './components/navbar'; this is in app.jsx based on template
-import Homepage from './pages/homepage';
-import Register from './pages/register';
-import Login from './pages/login';
-
-// ✅ Set up routes using React Router
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <ErrorPage />,
     children: [
-      { 
-        path: "/", 
-        element: <Homepage /> 
-      },
-      { 
-        path: "/login", 
-        element: <Login /> 
-      },
-      { 
-        path: "/register", 
-        element: <Register /> 
-      },
-    ],
+      {
+        index: true,
+        element: <Home />
+      }, {
+        path: '/login',
+        element: <Login />
+      }, {
+        path: '/signup',
+        element: <Signup />
+      }, {
+        path: '/profiles/:username',
+        element: <Profile />
+      }, {
+        path: '/me',
+        element: <Profile />
+      }, {
+        path: '/thoughts/:thoughtId',
+        element: <SingleThought />
+      }
+    ]
   },
 ]);
 
-// React 18: Use ReactDOM.createRoot
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <AuthProvider>
-      <ApolloProvider client={client}>
-        <RouterProvider router={router} />
-      </ApolloProvider>
-    </AuthProvider>
-  </React.StrictMode>
-);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React from 'react';
-// import ReactDOM from 'react-dom/client';
-// import './index.css';
-// import App from './App';
-// // import reportWebVitals from './reportWebVitals';
-// import client from './apolloClient'; 
-
-
-
-
-
-// // ✅ Correct Apollo Provider Import
-// import { ApolloProvider } from '@apollo/client';
-// import { BrowserRouter } from 'react-router-dom';
-// import { AuthProvider } from './context/authContext'; // Ensure the path is correct
-
-// // React 18: Use ReactDOM.createRoot
-// const root = ReactDOM.createRoot(document.getElementById('root'));
-// root.render(
-//   <React.StrictMode>
-//     <AuthProvider>
-//       <ApolloProvider client={client}>
-//         <BrowserRouter>
-//           <App />
-//         </BrowserRouter>
-//       </ApolloProvider>
-//     </AuthProvider>
-//   </React.StrictMode>
-// );
-
-
-
-
-// import logo from './logo.svg';
-// import './App.css';
-// import { Routes, Route } from "react-router-dom";
-// import Navbar from './components/navbar';
-// import Homepage from './pages/homepage';
-// import Register from './pages/register';
-// import Login from './pages/login';
-
-// function App() {
-//   return (
-//     <div>
-//       {/* Navbar component is rendered on all pages */}
-//       <Navbar />
-//       <main>
-//         {/* Define application routes */}
-//         <Routes>
-//           <Route path="/" element={<Homepage />} />
-//           <Route path="/login" element={<Login />} />
-//           <Route path="/register" element={<Register />} />
-//         </Routes>
-//       </main>
-//     </div>
-//   );
-// }
-
-// export default App;
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <RouterProvider router={router} />
+)

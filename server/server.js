@@ -1,40 +1,43 @@
 import dotenv from 'dotenv';
-dotenv.config(); 
+dotenv.config(); // ✅ Load .env variables once at the very top
+
 import express from 'express';
 import cors from 'cors';
+import mongoose from 'mongoose';
 import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
-import db from './config/connection.js';
 import typeDefs from './graphql/typeDefs.js';
 import resolvers from './graphql/resolvers/index.js';
-
-dotenv.config(); // Load environment variables
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// ✅ Use .env for MongoDB URI
-
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/proj3';
-
-// "mongodb+srv://haroutyunhaltunyan93:TOxbTgT3kG8fXtnS@loginproject3.puzfb.mongodb.net/?retryWrites=true&w=majority&appName=loginproject3";
-
-
-// const MONGODB = "mongodb+srv://haroutyunhaltunyan93:TOxbTgT3kG8fXtnS@loginproject3.puzfb.mongodb.net/?retryWrites=true&w=majority&appName=loginproject3";
-
-
-
 // ✅ Ensure MongoDB URI is provided
+const MONGODB_URI = process.env.MONGODB_URI;
 if (!MONGODB_URI) {
   console.error('❌ Missing MONGODB_URI in .env file');
   process.exit(1);
 }
 
-// ✅ Create a new Apollo Server instance
+console.log("🔍 Connecting to MongoDB:", MONGODB_URI);
+
+// ✅ Connect to MongoDB using Mongoose
+mongoose.connect(MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  tls: true, // ✅ Force TLS for MongoDB Atlas
+})
+  .then(() => console.log("✅ Successfully connected to MongoDB"))
+  .catch(err => {
+    console.error("❌ MongoDB Connection Error:", err.message);
+    process.exit(1);
+  });
+
+// ✅ Create Apollo Server
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: ({ req }) => ({ req }), // Pass request to context if needed
+  context: ({ req }) => ({ req }),
 });
 
 const startApolloServer = async () => {
@@ -42,35 +45,222 @@ const startApolloServer = async () => {
     await server.start();
 
     // ✅ Add Middleware
-    app.use(cors()); // Allow cross-origin requests
+    app.use(cors()); // Enable CORS for frontend communication
     app.use(express.urlencoded({ extended: false }));
     app.use(express.json());
 
     // ✅ Apollo Middleware
     app.use('/graphql', expressMiddleware(server));
 
-    // ✅ Confirm MongoDB Connection
-    db.once('open', () => {
-      console.log('✅ MongoDB Connected');
-
-      // Start Express Server
-      app.listen(PORT, () => {
-        console.log(`🚀 Server running at http://localhost:${PORT}/graphql`);
-      });
-    });
-
-    // ✅ Handle MongoDB connection errors
-    db.on('error', (err) => {
-      console.error('❌ MongoDB connection error:', err);
+    // ✅ Start Express Server on the Correct Host
+    app.listen(PORT, '0.0.0.0', () => {
+      console.log(`🚀 Server running at http://localhost:${PORT}/graphql`);
     });
 
   } catch (error) {
-    console.error('❌ Error starting Apollo Server:', error);
+    console.error("❌ Error starting Apollo Server:", error);
   }
 };
 
-// Start the server
+// ✅ Start the Server
 startApolloServer();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import dotenv from 'dotenv';
+// dotenv.config(); 
+// import express from 'express';
+// import cors from 'cors';
+// import { ApolloServer } from '@apollo/server';
+// import { expressMiddleware } from '@apollo/server/express4';
+// import db from './config/connection.js';
+// import typeDefs from './graphql/typeDefs.js';
+// import resolvers from './graphql/resolvers/index.js';
+
+// dotenv.config(); // Load environment variables
+
+// const app = express();
+// const PORT = process.env.PORT || 3000;
+
+// // ✅ Use .env for MongoDB URI
+
+// const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/proj3';
+
+// // "mongodb+srv://haroutyunhaltunyan93:TOxbTgT3kG8fXtnS@loginproject3.puzfb.mongodb.net/?retryWrites=true&w=majority&appName=loginproject3";
+
+
+// // const MONGODB = "mongodb+srv://haroutyunhaltunyan93:TOxbTgT3kG8fXtnS@loginproject3.puzfb.mongodb.net/?retryWrites=true&w=majority&appName=loginproject3";
+
+
+
+// // ✅ Ensure MongoDB URI is provided
+// if (!MONGODB_URI) {
+//   console.error('❌ Missing MONGODB_URI in .env file');
+//   process.exit(1);
+// }
+
+// // ✅ Create a new Apollo Server instance
+// const server = new ApolloServer({
+//   typeDefs,
+//   resolvers,
+//   context: ({ req }) => ({ req }), // Pass request to context if needed
+// });
+
+// const startApolloServer = async () => {
+//   try {
+//     await server.start();
+
+//     // ✅ Add Middleware
+//     app.use(cors()); // Allow cross-origin requests
+//     app.use(express.urlencoded({ extended: false }));
+//     app.use(express.json());
+
+//     // ✅ Apollo Middleware
+//     app.use('/graphql', expressMiddleware(server));
+
+//     // ✅ Confirm MongoDB Connection
+//     db.once('open', () => {
+//       console.log('✅ MongoDB Connected');
+
+//       // Start Express Server
+//       app.listen(PORT, () => {
+//         console.log(`🚀 Server running at http://localhost:${PORT}/graphql`);
+//       });
+//     });
+
+//     // ✅ Handle MongoDB connection errors
+//     db.on('error', (err) => {
+//       console.error('❌ MongoDB connection error:', err);
+//     });
+
+//   } catch (error) {
+//     console.error('❌ Error starting Apollo Server:', error);
+//   }
+// };
+
+// // Start the server
+// startApolloServer();
 
 
 

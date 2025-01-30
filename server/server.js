@@ -11,7 +11,7 @@ import resolvers from './graphql/resolvers/index.js';
 
 const app = express();
 // const PORT = process.env.PORT || 3000;  // on local machine
-const PORT = process.env.PORT || 10000;   // on render 
+const PORT = process.env.PORT || 10000;   // on render  make sure to open ip address whitelist 
 
 // ✅ Ensure MongoDB URI is provided
 const MONGODB_URI = process.env.MONGODB_URI;

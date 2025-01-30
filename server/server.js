@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-dotenv.config(); // ✅ Load .env variables once at the very top
+dotenv.config(); // ✅ Load .env variables once at the top
 
 import express from 'express';
 import cors from 'cors';
@@ -10,29 +10,30 @@ import typeDefs from './graphql/typeDefs.js';
 import resolvers from './graphql/resolvers/index.js';
 
 const app = express();
-// const PORT = process.env.PORT || 3000;  // on local machine
-const PORT = process.env.PORT || 10000;   // on render  make sure to open ip address whitelist 
+const PORT = process.env.PORT || 3000; // ✅ Let Render dynamically assign PORT
 
 // ✅ Ensure MongoDB URI is provided
 const MONGODB_URI = process.env.MONGODB_URI;
 if (!MONGODB_URI) {
-  console.error('❌ Missing MONGODB_URI in .env file');
+  console.error('❌ Missing MONGODB_URI in environment variables');
   process.exit(1);
 }
 
-console.log("🔍 Connecting to MongoDB:", MONGODB_URI);
-
-// ✅ Connect to MongoDB using Mongoose
-mongoose.connect(MONGODB_URI, {
-  // useNewUrlParser: true,
-  // useUnifiedTopology: true,
-  tls: true, // ✅ Force TLS for MongoDB Atlas
-})
-  .then(() => console.log("✅ Successfully connected to MongoDB"))
-  .catch(err => {
-    console.error("❌ MongoDB Connection Error:", err.message);
-    process.exit(1);
-  });
+// ✅ Connect to MongoDB with Retry Mechanism
+const connectWithRetry = () => {
+  console.log("🔍 Attempting to connect to MongoDB...");
+  mongoose.connect(MONGODB_URI, {
+    tls: true, // ✅ Enforce secure connection
+    serverSelectionTimeoutMS: 5000, // ✅ Avoid infinite waiting
+  })
+    .then(() => console.log("✅ Successfully connected to MongoDB"))
+    .catch(err => {
+      console.error("❌ MongoDB Connection Error:", err.message);
+      console.log("🔄 Retrying MongoDB connection in 5 seconds...");
+      setTimeout(connectWithRetry, 5000); // ✅ Retry every 5 seconds
+    });
+};
+connectWithRetry();
 
 // ✅ Create Apollo Server
 const server = new ApolloServer({
@@ -45,15 +46,13 @@ const startApolloServer = async () => {
   try {
     await server.start();
 
-    // ✅ Add Middleware
-    app.use(cors()); // Enable CORS for frontend communication
-    app.use(express.urlencoded({ extended: false }));
-    app.use(express.json());
+    // ✅ Add Middleware in Correct Order
+    app.use(cors()); // Enable CORS
+    app.use(express.json()); // ✅ Ensure JSON requests are parsed
+    app.use(express.urlencoded({ extended: false })); // ✅ URL encoded support
+    app.use('/graphql', expressMiddleware(server)); // ✅ Apollo Middleware
 
-    // ✅ Apollo Middleware
-    app.use('/graphql', expressMiddleware(server));
-
-    // ✅ Start Express Server on the Correct Host
+    // ✅ Start Express Server on the Correct Host for Render
     app.listen(PORT, '0.0.0.0', () => {
       console.log(`🚀 Server running at http://localhost:${PORT}/graphql`);
     });
@@ -65,6 +64,122 @@ const startApolloServer = async () => {
 
 // ✅ Start the Server
 startApolloServer();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import dotenv from 'dotenv';
+// dotenv.config(); // ✅ Load .env variables once at the very top
+
+// import express from 'express';
+// import cors from 'cors';
+// import mongoose from 'mongoose';
+// import { ApolloServer } from '@apollo/server';
+// import { expressMiddleware } from '@apollo/server/express4';
+// import typeDefs from './graphql/typeDefs.js';
+// import resolvers from './graphql/resolvers/index.js';
+
+// const app = express();
+// // const PORT = process.env.PORT || 3000;  // on local machine
+// const PORT = process.env.PORT || 10000;   // on render  make sure to open ip address whitelist 
+
+// // ✅ Ensure MongoDB URI is provided
+// const MONGODB_URI = process.env.MONGODB_URI;
+// if (!MONGODB_URI) {
+//   console.error('❌ Missing MONGODB_URI in .env file');
+//   process.exit(1);
+// }
+
+// console.log("🔍 Connecting to MongoDB:", MONGODB_URI);
+
+// // ✅ Connect to MongoDB using Mongoose
+// mongoose.connect(MONGODB_URI, {
+//   // useNewUrlParser: true,
+//   // useUnifiedTopology: true,
+//   tls: true, // ✅ Force TLS for MongoDB Atlas
+// })
+//   .then(() => console.log("✅ Successfully connected to MongoDB"))
+//   .catch(err => {
+//     console.error("❌ MongoDB Connection Error:", err.message);
+//     process.exit(1);
+//   });
+
+// // ✅ Create Apollo Server
+// const server = new ApolloServer({
+//   typeDefs,
+//   resolvers,
+//   context: ({ req }) => ({ req }),
+// });
+
+// const startApolloServer = async () => {
+//   try {
+//     await server.start();
+
+//     // ✅ Add Middleware
+//     app.use(cors()); // Enable CORS for frontend communication
+//     app.use(express.urlencoded({ extended: false }));
+//     app.use(express.json());
+
+//     // ✅ Apollo Middleware
+//     app.use('/graphql', expressMiddleware(server));
+
+//     // ✅ Start Express Server on the Correct Host
+//     app.listen(PORT, '0.0.0.0', () => {
+//       console.log(`🚀 Server running at http://localhost:${PORT}/graphql`);
+//     });
+
+//   } catch (error) {
+//     console.error("❌ Error starting Apollo Server:", error);
+//   }
+// };
+
+// // ✅ Start the Server
+// startApolloServer();
 
 
 

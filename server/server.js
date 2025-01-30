@@ -23,8 +23,8 @@ console.log("🔍 Connecting to MongoDB:", MONGODB_URI);
 
 // ✅ Connect to MongoDB using Mongoose
 mongoose.connect(MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+  // useNewUrlParser: true,
+  // useUnifiedTopology: true,
   tls: true, // ✅ Force TLS for MongoDB Atlas
 })
   .then(() => console.log("✅ Successfully connected to MongoDB"))

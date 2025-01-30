@@ -10,7 +10,8 @@ import typeDefs from './graphql/typeDefs.js';
 import resolvers from './graphql/resolvers/index.js';
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+// const PORT = process.env.PORT || 3000;  // on local machine
+const PORT = process.env.PORT || 10000;   // on render 
 
 // ✅ Ensure MongoDB URI is provided
 const MONGODB_URI = process.env.MONGODB_URI;

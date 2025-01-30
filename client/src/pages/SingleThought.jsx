@@ -1,6 +1,74 @@
-// Import the `useParams()` hook
+// // Import the `useParams()` hook
+// import { useParams } from 'react-router-dom';
+// import { useQuery } from '@apollo/client';
+
+// import CommentList from '../components/CommentList';
+// import CommentForm from '../components/CommentForm';
+
+// import { QUERY_SINGLE_THOUGHT } from '../utils/queries';
+
+// const SingleThought = () => {
+//   // Use `useParams()` to retrieve value of the route parameter `:profileId`
+//   const { thoughtId } = useParams();
+
+//   const { loading, data } = useQuery(QUERY_SINGLE_THOUGHT, {
+//     // pass URL parameter
+//     variables: { thoughtId: thoughtId },
+//   });
+
+//   const thought = data?.thought || {};
+
+//   if (loading) {
+//     return <div>Loading...</div>;
+//   }
+//   return (
+//     <div className="my-3">
+//       <h3 className="card-header bg-dark text-light p-2 m-0">
+//         {thought.thoughtAuthor} <br />
+//         <span style={{ fontSize: '1rem' }}>
+//           had this thought on {thought.createdAt}
+//         </span>
+//       </h3>
+//       <div className="bg-light py-4">
+//         <blockquote
+//           className="p-4"
+//           style={{
+//             fontSize: '1.5rem',
+//             fontStyle: 'italic',
+//             border: '2px dotted #1a1a1a',
+//             lineHeight: '1.5',
+//           }}
+//         >
+//           {thought.thoughtText}
+//         </blockquote>
+//       </div>
+
+//       <div className="my-5">
+//         <CommentList comments={thought.comments} />
+//       </div>
+//       <div className="m-3 p-4" style={{ border: '1px dotted #1a1a1a' }}>
+//         <CommentForm thoughtId={thought._id} />
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default SingleThought;
+
+
+
+
+
+///////////////////////////////////////////////// material ui 
+
+
+
+
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
+
+// Material-UI Imports
+import { Container, Paper, Typography, Box, CircularProgress } from '@mui/material';
 
 import CommentList from '../components/CommentList';
 import CommentForm from '../components/CommentForm';
@@ -8,48 +76,52 @@ import CommentForm from '../components/CommentForm';
 import { QUERY_SINGLE_THOUGHT } from '../utils/queries';
 
 const SingleThought = () => {
-  // Use `useParams()` to retrieve value of the route parameter `:profileId`
+  // Retrieve `thoughtId` from route parameters
   const { thoughtId } = useParams();
 
   const { loading, data } = useQuery(QUERY_SINGLE_THOUGHT, {
-    // pass URL parameter
-    variables: { thoughtId: thoughtId },
+    variables: { thoughtId },
   });
 
   const thought = data?.thought || {};
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}>
+        <CircularProgress />
+      </Box>
+    );
   }
-  return (
-    <div className="my-3">
-      <h3 className="card-header bg-dark text-light p-2 m-0">
-        {thought.thoughtAuthor} <br />
-        <span style={{ fontSize: '1rem' }}>
-          had this thought on {thought.createdAt}
-        </span>
-      </h3>
-      <div className="bg-light py-4">
-        <blockquote
-          className="p-4"
-          style={{
-            fontSize: '1.5rem',
-            fontStyle: 'italic',
-            border: '2px dotted #1a1a1a',
-            lineHeight: '1.5',
-          }}
-        >
-          {thought.thoughtText}
-        </blockquote>
-      </div>
 
-      <div className="my-5">
+  return (
+    <Container maxWidth="md" sx={{ mt: 4 }}>
+      {/* Thought Header */}
+      <Paper elevation={3} sx={{ p: 3, bgcolor: 'primary.dark', color: 'white', borderRadius: 2, mb: 4 }}>
+        <Typography variant="h4">
+          {thought.thoughtAuthor}
+        </Typography>
+        <Typography variant="subtitle1" sx={{ fontSize: '1rem' }}>
+          Had this thought on {thought.createdAt}
+        </Typography>
+      </Paper>
+
+      {/* Thought Content */}
+      <Paper elevation={2} sx={{ p: 4, bgcolor: 'background.paper', borderRadius: 2, mb: 4, border: '2px dotted #1a1a1a' }}>
+        <Typography variant="h5" sx={{ fontStyle: 'italic', lineHeight: '1.5' }}>
+          {thought.thoughtText}
+        </Typography>
+      </Paper>
+
+      {/* Comment List */}
+      <Box sx={{ mb: 4 }}>
         <CommentList comments={thought.comments} />
-      </div>
-      <div className="m-3 p-4" style={{ border: '1px dotted #1a1a1a' }}>
+      </Box>
+
+      {/* Comment Form */}
+      <Paper elevation={2} sx={{ p: 3, border: '1px dotted #1a1a1a', borderRadius: 2 }}>
         <CommentForm thoughtId={thought._id} />
-      </div>
-    </div>
+      </Paper>
+    </Container>
   );
 };
 

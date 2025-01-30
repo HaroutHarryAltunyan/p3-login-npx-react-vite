@@ -3,6 +3,7 @@ import { Box, Container, Paper, Typography, CircularProgress } from '@mui/materi
 
 import ThoughtList from '../components/ThoughtList';
 import ThoughtForm from '../components/ThoughtForm';
+import ToDoList from '../components/ToDoList'; // ✅ Import ToDoList Component
 import { QUERY_THOUGHTS } from '../utils/queries';
 
 const Home = () => {
@@ -25,7 +26,15 @@ const Home = () => {
       ) : (
         <ThoughtList thoughts={thoughts} title="Some Feed for Thought(s)..." />
       )}
-    
+
+      {/* To-Do List Section */}
+      <Typography variant="h4" sx={{ mt: 5, mb: 2, textAlign: 'center' }}>
+        To-Do List
+      </Typography>
+      <Paper elevation={3} sx={{ p: 3, borderRadius: 2, mt: 2 }}>
+        <ToDoList />
+      </Paper>
+
     </Container>
   );
 };

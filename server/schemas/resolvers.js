@@ -1,4 +1,4 @@
-const { User, Thought } = require('../models');
+const { User, Thought, ToDo } = require('../models'); // ✅ Include ToDo model
 const { signToken, AuthenticationError } = require('../utils/auth');
 
 const resolvers = {
@@ -21,6 +21,14 @@ const resolvers = {
         return User.findOne({ _id: context.user._id }).populate('thoughts');
       }
       throw AuthenticationError;
+    },
+
+    // ✅ Fetch all To-Do items
+    getToDos: async (parent, args, context) => {
+      if (!context.user) {
+        throw AuthenticationError;
+      }
+      return ToDo.find({ userId: context.user._id });
     },
   },
 
@@ -62,7 +70,6 @@ const resolvers = {
         return thought;
       }
       throw AuthenticationError;
-      ('You need to be logged in!');
     },
     addComment: async (parent, { thoughtId, commentText }, context) => {
       if (context.user) {
@@ -113,6 +120,36 @@ const resolvers = {
         );
       }
       throw AuthenticationError;
+    },
+
+    // ✅ Add a new To-Do
+    addToDo: async (parent, { task }, context) => {
+      if (!context.user) {
+        throw AuthenticationError;
+      }
+      return ToDo.create({ task, userId: context.user._id });
+    },
+
+    // ✅ Toggle completion status of a To-Do
+    toggleToDo: async (parent, { id }, context) => {
+      if (!context.user) {
+        throw AuthenticationError;
+      }
+      const todo = await ToDo.findById(id);
+      if (!todo) {
+        throw new Error('To-Do not found');
+      }
+      todo.completed = !todo.completed;
+      await todo.save();
+      return todo;
+    },
+
+    // ✅ Delete a To-Do
+    deleteToDo: async (parent, { id }, context) => {
+      if (!context.user) {
+        throw AuthenticationError;
+      }
+      return ToDo.findByIdAndDelete(id);
     },
   },
 };

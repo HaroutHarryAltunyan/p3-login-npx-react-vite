@@ -11,6 +11,11 @@ export const QUERY_USER = gql`
         thoughtText
         createdAt
       }
+      todos {  # ✅ Fetch user's To-Do List
+        _id
+        task
+        completed
+      }
     }
   }
 `;
@@ -55,6 +60,21 @@ export const QUERY_ME = gql`
         thoughtAuthor
         createdAt
       }
+      todos {  # ✅ Fetch logged-in user's To-Do List
+        _id
+        task
+        completed
+      }
+    }
+  }
+`;
+
+export const QUERY_TODOS = gql`
+  query getToDos {
+    getToDos {
+      _id
+      task
+      completed
     }
   }
 `;

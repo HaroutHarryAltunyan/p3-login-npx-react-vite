@@ -15,10 +15,10 @@ const Header = () => {
         <Box>
           <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
             <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
-              Harout's Thoughts
+              Harout's Thoughts and ToDos
             </Typography>
           </Link>
-          <Typography variant="subtitle1">Get into the mind of a programmer.</Typography>
+          <Typography variant="subtitle1">Thoughts and ToDos</Typography>
         </Box>
 
         {/* Right Side - Auth Buttons */}

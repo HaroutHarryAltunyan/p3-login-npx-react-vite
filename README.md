@@ -1,8 +1,6 @@
-# project3login
+# MERN To-Do List & Thoughts App 🚀
 
-# MERN Stack Single-Page Application
-
-## Thoughts for Loggerss logged
+## Thoughts for Loggerss 
 
 
 ## Project Description
@@ -10,7 +8,7 @@ This application is a full-stack MERN (MongoDB, Express.js, React, Node.js) sing
 
 ## Deployed Application
 
-- **Live URL:** [Insert Deployed URL Here]
+- **Live URL:** [https://p3-login-npx-react-vite.onrender.com]
 - **GitHub Repository:** [https://github.com/HaroutHarryAltunyan/project3login]
 
 ## Features
@@ -32,8 +30,10 @@ SO THAT I can achieve my goals effortlessly.
 
 ## Technologies Used
 - **Frontend:**
-  - React
-  - CSS-in-JS or Styled Components , Material UI
+  - React (Vite for fast development)
+  - CSS-in-JS or Styled Components 
+  - Apollo Client for GraphQL queries
+  - Material-UI for UI components
 
 - **Backend:**
   - Node.js
@@ -53,7 +53,7 @@ SO THAT I can achieve my goals effortlessly.
 ## Installation
 1. Clone the repository:
    ```bash
-   git clone [git@github.com:HaroutHarryAltunyan/project3login.git]
+   git clone [git clone https://github.com/HaroutHarryAltunyan/p3-login-npx-react-vite.git]
    ```
 2. Navigate to the project directory:
    ```bash
@@ -74,8 +74,14 @@ SO THAT I can achieve my goals effortlessly.
      ```
 5. Start the development server:
    ```bash
-   npm run start
+   npm run Develop
    ```
+
+## Features
+✔️ User Authentication: Sign up and log in with JWT
+✔️ Thoughts & Comments: Users can post thoughts and comment
+✔️ To-Do List: Add, toggle, and delete tasks
+✔️ GraphQL API: Built with Apollo Server
 
 ## Usage
 1. Open the application in your browser at `http://localhost:[PORT]`.
@@ -85,7 +91,84 @@ SO THAT I can achieve my goals effortlessly.
 ## Screenshots
 - 
 
-![main login page ](./assets/images/loginpage%20.png)
+![main login page ](./client/public/Screenshot%202025-01-29%20at%2011.26.47 PM.png)
+![main login page ](./client/public/Screenshot%202025-01-30%20at%2012.57.52 AM.png)
+
+## GraphQL Endpoints
+
+Query
+	•	users → Get all users
+	•	user(username: String!) → Get user details
+	•	thoughts → Fetch all thoughts
+	•	getToDos → Fetch all to-do items
+	•	me → Get logged-in user data
+
+Mutations
+	•	addUser(username, email, password) → Sign up
+	•	login(email, password) → Authenticate user
+	•	addThought(thoughtText) → Create a new thought
+	•	addComment(thoughtId, commentText) → Add a comment
+	•	addToDo(task) → Add a to-do item
+	•	toggleToDo(id) → Mark a to-do as complete/incomplete
+	•	deleteToDo(id) → Remove a to-do
+
+
+## Project Structure
+
+📂 p3-login-npx-react-vite
+├── 📂 client/           # Front-end (React)
+│   ├── 📂 src/
+│   │   ├── 📂 components/
+│   │   │   ├── CommentForm
+|   |   |   ├── CommentList
+|   |   |   ├── Footer
+|   |   |   ├── Header
+│   │   │   ├── ThoughtList.jsx
+│   │   │   ├── ThoughtForm.jsx
+│   │   │   ├── ToDoList.jsx
+│   │   ├──    pages/
+|   |   |   |── ErrorPage.jsx
+│   │   │   ├── Home.jsx
+│   │   │   ├── Login.jsx
+|   |   |   |     Profile.jsx
+│   │   │   ├── Signup.jsx
+|   |   |   |── SingleThought
+│   │   ├── 📂 utils/
+|   |   |   |── auth.js
+│   │   │   ├── queries.js
+│   │   │   ├── mutations.js
+│   │   ├── App.jsx
+│   │   ├── main.jsx
+│   ├── package.json
+│   ├── vite.config.js
+│
+├── 📂 server/           # Back-end (Express + Apollo Server)
+│   ├── 📂 config/
+│   │   ├── connection.js
+│   ├── 📂 models/
+│   │   ├── User.js
+│   │   ├── Thought.js
+│   │   ├── ToDo.js
+|  |    |── Users.js
+│   ├── 📂 schemas/
+|   |    |── index.js
+│   │   ├── resolvers.js
+│   │   ├── typeDefs.js
+│   ├── 📂 utils/
+│   │   ├── auth.js
+|   |   |──dateFormat.js
+│   ├── server.js
+│   ├── package.json
+│
+├── .gitignore
+├── README.md
+
+
+## Deployment
+	1.	MongoDB Atlas: Set up a cloud database
+	2.	Render/Apollo: Deploy client and server
+	3.	Update environment variables in your hosting service
+
 
 ## Future Enhancements
 - Implement additional features such as:
@@ -93,6 +176,9 @@ SO THAT I can achieve my goals effortlessly.
   - Progressive Web App (PWA) compliance.
   - Enhanced UI/UX.
   - Integration with third-party APIs.
+  - Dark mode UI with Material-UI
+  - Email verification for user authentication
+  - Drag-and-drop functionality for the To-Do list
 
 ## Presentation Highlights
 - **Elevator Pitch:** A concise overview of the application’s purpose and functionality.

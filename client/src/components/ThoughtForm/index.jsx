@@ -46,7 +46,7 @@ const ThoughtForm = () => {
   return (
     <Box sx={{ my: 4, p: 3, border: 1, borderRadius: 2, borderColor: 'grey.300', bgcolor: 'background.paper' }}>
       <Typography variant="h5" sx={{ mb: 2 }}>
-        What's on your techy mind?
+        Think and Do Something
       </Typography>
 
       {Auth.loggedIn() ? (
@@ -85,7 +85,7 @@ const ThoughtForm = () => {
         </>
       ) : (
         <Typography variant="body1" sx={{ textAlign: 'center' }}>
-          You need to be logged in to share your thoughts. Please{' '}
+          You need to be logged in to share your thoughts or add ToDos. Please{' '}
           <Link to="/login">login</Link> or <Link to="/signup">signup</Link>.
         </Typography>
       )}

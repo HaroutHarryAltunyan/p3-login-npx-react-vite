@@ -24,7 +24,16 @@ const userSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: 'Thought',
     },
+
   ],
+todos: [
+  {
+    type: Schema.Types.ObjectId,
+    ref: 'ToDo',
+  },
+
+]
+
 });
 
 userSchema.pre('save', async function (next) {

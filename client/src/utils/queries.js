@@ -70,11 +70,15 @@ export const QUERY_ME = gql`
 `;
 
 export const QUERY_TODOS = gql`
-  query getToDos {
-    getToDos {
+  query GetToDos {
+  getToDos {
+    _id
+    username
+    todos {
       _id
-      task
       completed
+      task
     }
   }
+}
 `;

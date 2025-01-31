@@ -40,7 +40,7 @@ const typeDefs = `
     thoughts(username: String): [Thought]
     thought(thoughtId: ID!): Thought
     me: User
-    getToDos: [ToDo]  # 🔹 Query for all To-Dos
+    getToDos: User  # 🔹 Query for all To-Dos
 
   }
 

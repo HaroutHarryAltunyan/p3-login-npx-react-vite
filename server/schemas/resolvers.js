@@ -28,7 +28,7 @@ const resolvers = {
       if (!context.user) {
         throw AuthenticationError;
       }
-      return ToDo.find({ userId: context.user._id });
+      return User.findOne({ _id: context.user._id }).populate("todos");
     },
   },
 
@@ -127,7 +127,14 @@ const resolvers = {
       if (!context.user) {
         throw AuthenticationError;
       }
-      return ToDo.create({ task, userId: context.user._id });
+const createToDo = await ToDo.create({ task });
+await User.findOneAndUpdate(
+  {_id: context.user._id},
+  {$addToSet:{todos: createToDo._id}}
+
+)
+
+      return createToDo
     },
 
     // ✅ Toggle completion status of a To-Do

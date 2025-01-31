@@ -75,7 +75,7 @@ const ToDoList = () => {
       </Button>
 
       <List sx={{ mt: 2 }}>
-        {data?.getToDos.map((todo) => (
+        {data?.getToDos?.todos?.map((todo) => (
           <ListItem key={todo._id} secondaryAction={
             <IconButton edge="end" onClick={() => handleDelete(todo._id)}>
               <DeleteIcon />
